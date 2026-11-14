@@ -1,9 +1,8 @@
 {
   "$schema": "https://biomejs.dev/schemas/latest/schema.json",
   "files": {
-    "includes": ["**", "!**/node_modules", "!**/dist", "!**/.output", "!**/.wxt"]
+    "includes": ["**", "!**/node_modules", "!**/dist", "!**/.output", "!**/.wxt", "!**/*.md"]
   },
   "formatter": { "indentStyle": "space", "lineWidth": 100 },
-  "javascript": { "formatter": { "quoteStyle": "single" } },
-  "linter": { "enabled": true, "rules": { "recommended": true } }
+  "javascript": { "formatter": { "quoteStyle": "single" } }
 }
