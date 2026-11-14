@@ -1,3 +1,4 @@
+import { CONTEXT_BOOST, hasContextBefore } from '../context';
 import type { Detector, EntityType, Finding } from '../types';
 
 export interface PatternSpec {
@@ -13,14 +14,11 @@ export interface PatternSpec {
   invalidate?: (match: string, text: string, start: number) => boolean;
 }
 
-const CONTEXT_WINDOW = 40;
-const CONTEXT_BOOST = 0.35;
-
 export function createPatternDetector(spec: PatternSpec): Detector {
   for (const { regex } of spec.patterns) {
     if (!regex.global) throw new Error(`${spec.id}: pattern ${regex} needs the g flag`);
   }
-  const contextWords = spec.contextWords?.map((w) => w.toLowerCase());
+  const contextWords = spec.contextWords ?? [];
 
   return {
     id: spec.id,
@@ -39,11 +37,8 @@ export function createPatternDetector(spec: PatternSpec): Detector {
             if (result === false) continue;
             if (typeof result === 'number') confidence = result;
           }
-          if (contextWords) {
-            const before = text.slice(Math.max(0, start - CONTEXT_WINDOW), start).toLowerCase();
-            if (contextWords.some((w) => before.includes(w))) {
-              confidence = Math.min(1, confidence + CONTEXT_BOOST);
-            }
+          if (hasContextBefore(text, start, contextWords)) {
+            confidence = Math.min(1, confidence + CONTEXT_BOOST);
           }
 
           findings.push({

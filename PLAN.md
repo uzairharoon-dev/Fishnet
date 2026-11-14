@@ -51,7 +51,7 @@ bench/                datasets (JSONL), generator, precision/recall runner
 ## MVP checklist
 
 - [x] **D0 Scaffold.** pnpm workspace, Biome, WXT React app, `pii-core` with email detector. `pnpm build` passes, first commit.
-- [ ] **D1 Core.** `context.ts`, IP detector, overlap tests. 15+ unit tests including overlap and email-inside-URL.
+- [x] **D1 Core.** `context.ts`, IP detector, overlap tests. 15+ unit tests including overlap and email-inside-URL.
 - [ ] **D2 Validated detectors.** Luhn, mod-97, CNIC, card, IBAN, phone (PK default), passport (context-gated). Positive, hard-negative and context tests per type.
 - [ ] **D3 Secrets + bench v0.** AWS, GitHub, JWT (header decode check), private key, env assignments (value span only). ~150 labelled samples + 50 negatives; `pnpm bench` prints per-type P/R/F1.
 - [ ] **D4 ChatGPT adapter.** Adapter registry, `text-index.ts`. Correct offsets for multi-paragraph and code-block input.

@@ -9,9 +9,10 @@ export const emailDetector = createPatternDetector({
       score: 0.95,
     },
   ],
-  // Skip user@host in connection strings like postgres://admin@db.io.
+  // Skip the userinfo part of URLs like postgres://admin@db.io. An email in a
+  // path or query string (?to=ahmed@acme.pk) is still reported.
   invalidate: (match, text, start) => {
     const before = text.slice(Math.max(0, start - 64), start);
-    return /[a-z][a-z0-9+.-]*:\/\/[^\s]*$/i.test(before + match.split('@')[0]);
+    return /[a-z][a-z0-9+.-]*:\/\/[^\s/?#@]*$/i.test(before + match.split('@')[0]);
   },
 });
