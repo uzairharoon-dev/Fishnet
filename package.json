@@ -1,0 +1,17 @@
+{
+  "name": "fishnet",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "pnpm --filter @fishnet/extension dev",
+    "build": "pnpm -r build",
+    "test": "pnpm -r test",
+    "typecheck": "pnpm -r typecheck",
+    "lint": "biome check .",
+    "format": "biome format --write ."
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.6.7",
+    "typescript": "^5.9.3"
+  }
+}
