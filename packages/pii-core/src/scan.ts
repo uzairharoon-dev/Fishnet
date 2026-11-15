@@ -1,8 +1,22 @@
+import { cnicDetector } from './detectors/cnic';
+import { creditCardDetector } from './detectors/credit-card';
 import { emailDetector } from './detectors/email';
+import { ibanDetector } from './detectors/iban';
 import { ipv4Detector, ipv6Detector } from './detectors/ip';
+import { passportDetector } from './detectors/passport';
+import { phoneDetector } from './detectors/phone';
 import type { AsyncDetector, DetectContext, Detector, EntityType, Finding } from './types';
 
-export const builtInDetectors: Detector[] = [emailDetector, ipv4Detector, ipv6Detector];
+export const builtInDetectors: Detector[] = [
+  emailDetector,
+  phoneDetector,
+  creditCardDetector,
+  ibanDetector,
+  cnicDetector,
+  passportDetector,
+  ipv4Detector,
+  ipv6Detector,
+];
 
 export interface ScanOptions {
   detectors?: (Detector | AsyncDetector)[];

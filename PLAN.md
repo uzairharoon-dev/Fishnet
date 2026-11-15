@@ -1,4 +1,4 @@
-# Fishnet plan
+﻿# Fishnet plan
 
 Privacy-first Chrome extension (Manifest V3) that catches PII and secrets before they are sent to AI tools. It redacts them reversibly: real values become placeholders such as `[EMAIL_1]`, and the extension restores them in the AI's reply. Nothing leaves the device.
 
@@ -7,7 +7,7 @@ Privacy-first Chrome extension (Manifest V3) that catches PII and secrets before
 | Decision | Choice | Reason |
 |---|---|---|
 | Extension framework | WXT | MV3-first, file-based entrypoints, HMR, typed storage, Shadow DOM UI helpers |
-| Monorepo | pnpm workspaces | `workspace:*` linking for `pii-core`; no Turborepo needed for 2–3 packages |
+| Monorepo | pnpm workspaces | `workspace:*` linking for `pii-core`; no Turborepo needed for 2â€“3 packages |
 | Language | TypeScript strict | Detector types are the core contract |
 | Popup / options | React | Familiar, bundle size irrelevant on extension pages |
 | In-page UI | Vanilla TS in Shadow DOM | Small content script, isolated from host CSS |
@@ -52,10 +52,10 @@ bench/                datasets (JSONL), generator, precision/recall runner
 
 - [x] **D0 Scaffold.** pnpm workspace, Biome, WXT React app, `pii-core` with email detector. `pnpm build` passes, first commit.
 - [x] **D1 Core.** `context.ts`, IP detector, overlap tests. 15+ unit tests including overlap and email-inside-URL.
-- [ ] **D2 Validated detectors.** Luhn, mod-97, CNIC, card, IBAN, phone (PK default), passport (context-gated). Positive, hard-negative and context tests per type.
+- [x] **D2 Validated detectors.** Luhn, mod-97, CNIC, card, IBAN, phone (PK default), passport (context-gated). Positive, hard-negative and context tests per type.
 - [ ] **D3 Secrets + bench v0.** AWS, GitHub, JWT (header decode check), private key, env assignments (value span only). ~150 labelled samples + 50 negatives; `pnpm bench` prints per-type P/R/F1.
 - [ ] **D4 ChatGPT adapter.** Adapter registry, `text-index.ts`. Correct offsets for multi-paragraph and code-block input.
-- [ ] **D5 Paste interception.** Redact mode turns pasted email + CNIC into `[EMAIL_1] … [CNIC_1]`; send works; Ctrl+Z works; no double insert.
+- [ ] **D5 Paste interception.** Redact mode turns pasted email + CNIC into `[EMAIL_1] â€¦ [CNIC_1]`; send works; Ctrl+Z works; no double insert.
 - [ ] **D6 Highlights + banner.** Live highlights in warn mode, Shadow DOM banner with finding chips and Redact buttons.
 - [ ] **D7 Submit interception.** Three modes behave; Shift+Enter still newline; clean messages send instantly.
 - [ ] **D8 Settings + UI.** Options page (per-site mode, detector toggles), popup (site toggle, counts, adapter health), badge. Changes apply without reload.
@@ -66,7 +66,7 @@ bench/                datasets (JSONL), generator, precision/recall runner
 
 - `bench/data/synthetic.jsonl` (generated), `handlabeled.jsonl` (realistic prompts, never tuned on), `negatives.jsonl` (UUIDs, SHAs, timestamps, non-Luhn numbers).
 - Sample: `{"id","text","entities":[{"type","start","end"}],"source","tags"}`.
-- Metrics per type: precision, recall, F1, F2 (exact and ≥50% overlap), false alarms per 1,000 words, `scanSync` latency p50/p95, `restore(redact(x)) === x` property test.
+- Metrics per type: precision, recall, F1, F2 (exact and â‰¥50% overlap), false alarms per 1,000 words, `scanSync` latency p50/p95, `restore(redact(x)) === x` property test.
 
 ## Honest limits
 

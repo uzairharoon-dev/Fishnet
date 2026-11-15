@@ -1,7 +1,15 @@
 export { CONTEXT_BOOST, CONTEXT_WINDOW, hasContextBefore } from './context';
+export { cnicDetector } from './detectors/cnic';
+export { creditCardDetector } from './detectors/credit-card';
 export { emailDetector } from './detectors/email';
+export { ibanDetector } from './detectors/iban';
 export { ipv4Detector, ipv6Detector } from './detectors/ip';
+export { passportDetector } from './detectors/passport';
 export { createPatternDetector, type PatternSpec } from './detectors/pattern';
+export { phoneDetector } from './detectors/phone';
 export { builtInDetectors, resolveOverlaps, type ScanOptions, scan, scanSync } from './scan';
 export type { AsyncDetector, DetectContext, Detector, EntityType, Finding } from './types';
+export { cardIssuer, isValidCard } from './validators/card';
+export { ibanChecksumOk, isValidIBAN } from './validators/iban';
 export { isValidIPv4, isValidIPv6 } from './validators/ip';
+export { luhn } from './validators/luhn';
