@@ -1,0 +1,50 @@
+{"id":"neg-0000","text":"Can you explain how UUIDs like 3f2b8c1e-9d4a-4f6b-a2c7-5e8d1f0b9a3c are generated?","entities":[],"source":"negative"}
+{"id":"neg-0001","text":"Revert commit 4b825dc642cb6eb9a060e54bf8d69288fbee4904 and explain why.","entities":[],"source":"negative"}
+{"id":"neg-0002","text":"The build started at 2026-11-15T09:30:00Z and took 12:45:10 to finish.","entities":[],"source":"negative"}
+{"id":"neg-0003","text":"Upgrade from v2.3.1.4 to version 3.0.0.1 broke the plugin.","entities":[],"source":"negative"}
+{"id":"neg-0004","text":"Set max_tokens = 4096 and temperature = 0.7 in the request.","entities":[],"source":"negative"}
+{"id":"neg-0005","text":"In C++, std::vector and std::map are both in the standard library.","entities":[],"source":"negative"}
+{"id":"neg-0006","text":"Order number 1234567812345678 has not shipped yet.","entities":[],"source":"negative"}
+{"id":"neg-0007","text":"PASSWORD=changeme is the placeholder in our .env.example file.","entities":[],"source":"negative"}
+{"id":"neg-0008","text":"Use API_KEY=${API_KEY} so the key comes from the environment.","entities":[],"source":"negative"}
+{"id":"neg-0009","text":"const token = getToken(); then pass token to the client.","entities":[],"source":"negative"}
+{"id":"neg-0010","text":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.","entities":[],"source":"negative"}
+{"id":"neg-0011","text":"The meeting is on 15/11/2026 at 10:30, room 4B.","entities":[],"source":"negative"}
+{"id":"neg-0012","text":"Our revenue grew from 1,250,000 to 1,875,000 PKR this quarter.","entities":[],"source":"negative"}
+{"id":"neg-0013","text":"Write a Python function that validates an email address with a regex.","entities":[],"source":"negative"}
+{"id":"neg-0014","text":"What is the difference between IPv4 and IPv6 addressing?","entities":[],"source":"negative"}
+{"id":"neg-0015","text":"Explain how the Luhn algorithm checks credit card numbers.","entities":[],"source":"negative"}
+{"id":"neg-0016","text":"How do I generate an RSA key pair with ssh-keygen?","entities":[],"source":"negative"}
+{"id":"neg-0017","text":"Tracking number 1Z999AA10123456784 shows it is in Karachi.","entities":[],"source":"negative"}
+{"id":"neg-0018","text":"Section 4.2.1 of the spec covers retries; see also table 7.","entities":[],"source":"negative"}
+{"id":"neg-0019","text":"Invoice INV-2026-00042 totals 18,500 rupees including tax.","entities":[],"source":"negative"}
+{"id":"neg-0020","text":"The hash sha256:9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08 matches.","entities":[],"source":"negative"}
+{"id":"neg-0021","text":"Call the function with ids [101, 202, 303] and limit 50.","entities":[],"source":"negative"}
+{"id":"neg-0022","text":"docker run -p 8080:80 nginx:1.27 starts the server.","entities":[],"source":"negative"}
+{"id":"neg-0023","text":"The password reset link expires in 24 hours.","entities":[],"source":"negative"}
+{"id":"neg-0024","text":"Our office is open 9 to 5, Monday to Friday.","entities":[],"source":"negative"}
+{"id":"neg-0025","text":"token = response.token is undefined after login, why?","entities":[],"source":"negative"}
+{"id":"neg-0026","text":"ISBN 978-3-16-148410-0 is the second edition.","entities":[],"source":"negative"}
+{"id":"neg-0027","text":"Set the timeout to 30000 ms and retries to 3.","entities":[],"source":"negative"}
+{"id":"neg-0028","text":"npm install react@19.2.4 react-dom@19.2.4","entities":[],"source":"negative"}
+{"id":"neg-0029","text":"The coordinates are 31.5204, 74.3587 roughly.","entities":[],"source":"negative"}
+{"id":"neg-0030","text":"Request id 1bdd57bb-d5a3-2645-dc4c-7bff6879c008 failed.","entities":[],"source":"negative"}
+{"id":"neg-0031","text":"Released 2026-10-06 as v4.4.39.","entities":[],"source":"negative"}
+{"id":"neg-0032","text":"Request id 6d740ae2-a8b2-39cd-3563-2058e7e2e270 failed.","entities":[],"source":"negative"}
+{"id":"neg-0033","text":"Your order 8798833601 of 9 items is packed.","entities":[],"source":"negative"}
+{"id":"neg-0034","text":"Your order 8376803413 of 9 items is packed.","entities":[],"source":"negative"}
+{"id":"neg-0035","text":"Tests took 15.536 seconds on 20 cores.","entities":[],"source":"negative"}
+{"id":"neg-0036","text":"Released 2020-06-08 as v2.18.27.","entities":[],"source":"negative"}
+{"id":"neg-0037","text":"Cherry-pick 74b12c6173bb5234dc40128e3e203e738a19672e onto main.","entities":[],"source":"negative"}
+{"id":"neg-0038","text":"Request id 3b176f7f-9d7b-9571-9f42-e702f4ef6d0d failed.","entities":[],"source":"negative"}
+{"id":"neg-0039","text":"Released 2023-11-09 as v1.19.38.","entities":[],"source":"negative"}
+{"id":"neg-0040","text":"Released 2024-03-16 as v5.3.36.","entities":[],"source":"negative"}
+{"id":"neg-0041","text":"Tests took 48.468 seconds on 61 cores.","entities":[],"source":"negative"}
+{"id":"neg-0042","text":"Cherry-pick 0c1ecec16f44f37deaa699faef746240b799e1df onto main.","entities":[],"source":"negative"}
+{"id":"neg-0043","text":"Cherry-pick 7b91425e1504309573d1c265423bd96059871c93 onto main.","entities":[],"source":"negative"}
+{"id":"neg-0044","text":"Your order 3799202967 of 4 items is packed.","entities":[],"source":"negative"}
+{"id":"neg-0045","text":"Tests took 48.798 seconds on 55 cores.","entities":[],"source":"negative"}
+{"id":"neg-0046","text":"Request id 26712cc6-1405-3a0d-9a34-6354a8e4febc failed.","entities":[],"source":"negative"}
+{"id":"neg-0047","text":"Your order 8641361066 of 6 items is packed.","entities":[],"source":"negative"}
+{"id":"neg-0048","text":"Tests took 12.624 seconds on 44 cores.","entities":[],"source":"negative"}
+{"id":"neg-0049","text":"Your order 9841070434 of 8 items is packed.","entities":[],"source":"negative"}

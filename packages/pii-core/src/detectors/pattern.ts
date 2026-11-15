@@ -10,6 +10,8 @@ export interface PatternSpec {
   validate?: (match: string) => boolean | number;
   /** Words that raise confidence when they appear shortly before a match. */
   contextWords?: string[];
+  /** Confidence added when a context word is found. Default CONTEXT_BOOST. */
+  contextBoost?: number;
   /** Return true to drop a match, e.g. an email inside a URL. */
   invalidate?: (match: string, text: string, start: number) => boolean;
 }
@@ -38,7 +40,7 @@ export function createPatternDetector(spec: PatternSpec): Detector {
             if (typeof result === 'number') confidence = result;
           }
           if (hasContextBefore(text, start, contextWords)) {
-            confidence = Math.min(1, confidence + CONTEXT_BOOST);
+            confidence = Math.min(1, confidence + (spec.contextBoost ?? CONTEXT_BOOST));
           }
 
           findings.push({

@@ -1,0 +1,42 @@
+# Hand-written realistic prompts. One sample per line. Mark entities as {{TYPE|value}}.
+# Use a literal \n for a line break inside a sample. Do not tune detectors on this file.
+# PERSON, ORG and LOCATION are labelled for v3 (NER); they are reported but not scored yet.
+Draft a reply to {{PERSON|Ahmed Khan}} about the overdue invoice and send it to {{EMAIL|ahmed@acme.pk}}
+hi can u rewrite this msg for my landlord {{PERSON|Mr. Tariq}}, his number is {{PHONE|0321-4567890}} and i want to ask for 2 more weeks
+Summarise this complaint from {{PERSON|Sana Raza}} ({{EMAIL|sana.raza92@gmail.com}}): she was charged twice on card {{CREDIT_CARD|4111 1111 1111 1111}}
+My CNIC is {{CNIC|35202-1234567-1}}, write an application to {{ORG|NADRA}} for a duplicate card
+Translate to English: میرا شناختی کارڈ نمبر {{CNIC|4210112345671}} ہے
+Fix this python, it cant connect:\nconn = psycopg2.connect(host="{{IP_ADDRESS|10.12.0.7}}", user="app", password="{{SECRET_ASSIGNMENT|Pk$2026!db}}")
+why does this fail\nAWS_ACCESS_KEY_ID={{AWS_ACCESS_KEY|AKIAIOSFODNN7EXAMPLE}}\nAWS_SECRET_ACCESS_KEY={{AWS_SECRET_KEY|wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY}}
+please make this email more professional: Dear {{PERSON|Fatima}}, kindly transfer the fee to {{IBAN|PK36SCBL0000001123456702}} by Friday
+Our staging box {{IP_ADDRESS|172.31.22.9}} keeps running out of memory, here is the dmesg output
+can you check my resume, contact: {{EMAIL|bilal.qureshi@outlook.com}} | {{PHONE|+92 333 5123456}} | {{LOCATION|Lahore}}
+Write a cover letter for {{ORG|Systems Limited}}, my name is {{PERSON|Hamza Butt}}
+decode this for me {{JWT|eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIn0.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c}}
+my github action says bad credentials, I used GH_TOKEN: {{GITHUB_TOKEN|ghp_A1b2C3d4E5f6G7h8I9j0K1l2M3n4O5p6Q7r8}}
+Generate a visa cover letter. Applicant {{PERSON|Zainab Malik}}, passport no {{PASSPORT|AB1234567}}, travelling to {{LOCATION|Dubai}}
+Here's the SMTP config that fails:\nSMTP_HOST=smtp.gmail.com\nSMTP_USER={{EMAIL|alerts@techno.io}}\nSMTP_PASSWORD={{SECRET_ASSIGNMENT|qwer7yuiop2asd}}
+Can you parse this log line: 2026-11-14 22:10:03 login ok user={{EMAIL|usman@bank.com.pk}} ip={{IP_ADDRESS|39.45.120.18}}
+pls write sms to customer {{PHONE|03001234567}} that their order is delayed
+Explain what this key is used for:\n{{PRIVATE_KEY|-----BEGIN OPENSSH PRIVATE KEY-----\nb3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW\n-----END OPENSSH PRIVATE KEY-----}}
+The client {{ORG|Habib Traders}} wants a quotation, email {{EMAIL|info@habibtraders.pk}}, office {{PHONE|042-35761234}}
+I paid with {{CREDIT_CARD|5555-5555-5555-4444}} but the order shows unpaid, write a complaint
+refund to {{CREDIT_CARD|378282246310005}} please, customer is {{PERSON|John Smith}}
+German supplier bank details: {{IBAN|DE89 3704 0044 0532 0130 00}}, ask them to confirm
+Make a table from this: {{PERSON|Ali}} {{PHONE|0345-9876543}}, {{PERSON|Hira}} {{PHONE|0312-1122334}}
+{"name": "{{PERSON|Omar Siddiqui}}", "email": "{{EMAIL|omar.s@startup.dev}}", "api_key": "{{SECRET_ASSIGNMENT|sk_test_51Hx9QaZ}}"}
+ssh root@{{IP_ADDRESS|203.0.113.45}} says permission denied, what do I check?
+Rewrite formally: hey {{PERSON|Priya}}, my whatsapp is {{PHONE|+44 7911 123456}}, ping me
+Use this in the curl: -H "Authorization: Bearer {{JWT|eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjQyLCJyb2xlIjoiYWRtaW4ifQ.dGhpc2lzbm90YXJlYWxzaWduYXR1cmVfYWJjZGVmZ2g}}"
+Write a reminder to {{PERSON|Usman}}: pay rent to account {{IBAN|PK36 SCBL 0000 0011 2345 6702}} before the 5th
+Customer called from {{PHONE|+923215551234}} about CNIC {{CNIC|6110112345678}} mismatch
+docker-compose has REDIS_PASSWORD={{SECRET_ASSIGNMENT|r3d1sP4ss2026}} and it still says NOAUTH
+Server list:\nweb1 {{IP_ADDRESS|192.168.10.21}}\nweb2 {{IP_ADDRESS|192.168.10.22}}\ndb {{IP_ADDRESS|2001:db8:85a3::8a2e:370:7334}}
+Help me reply to {{PERSON|Maria Garcia}} from {{ORG|Acme Corp}}, she asked for the contract by email
+Turn this into bullet points: met {{PERSON|Bilal}} at {{LOCATION|Islamabad}}, he wants the demo next week
+my password: {{SECRET_ASSIGNMENT|Lahore@123}} isnt working on the portal, write a ticket
+Format as JSON: name {{PERSON|Ayesha Chaudhry}}, cnic {{CNIC|3740512345672}}, phone {{PHONE|0333-7654321}}
+Proofread: Please contact {{EMAIL|hr@acme.pk}} or call {{PHONE|+92 42 35761234}} for the interview
+I think this card is fake: {{CREDIT_CARD|6011 1111 1111 1117}}, can you tell?
+Our VPN endpoint is {{IP_ADDRESS|58.65.170.12}}, write setup steps for new staff
+token for the bot is {{GITHUB_TOKEN|ghp_Zz9Yy8Xx7Ww6Vv5Uu4Tt3Ss2Rr1Qq0Pp9Oo8}}, why does it get 401

@@ -5,9 +5,20 @@ import { ibanDetector } from './detectors/iban';
 import { ipv4Detector, ipv6Detector } from './detectors/ip';
 import { passportDetector } from './detectors/passport';
 import { phoneDetector } from './detectors/phone';
+import { secretAssignmentDetector } from './detectors/secrets/assignment';
+import { awsAccessKeyDetector, awsSecretKeyDetector } from './detectors/secrets/aws';
+import { githubTokenDetector } from './detectors/secrets/github';
+import { jwtDetector } from './detectors/secrets/jwt';
+import { privateKeyDetector } from './detectors/secrets/private-key';
 import type { AsyncDetector, DetectContext, Detector, EntityType, Finding } from './types';
 
 export const builtInDetectors: Detector[] = [
+  privateKeyDetector,
+  awsAccessKeyDetector,
+  awsSecretKeyDetector,
+  githubTokenDetector,
+  jwtDetector,
+  secretAssignmentDetector,
   emailDetector,
   phoneDetector,
   creditCardDetector,

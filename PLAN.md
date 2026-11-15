@@ -1,4 +1,4 @@
-﻿# Fishnet plan
+# Fishnet plan
 
 Privacy-first Chrome extension (Manifest V3) that catches PII and secrets before they are sent to AI tools. It redacts them reversibly: real values become placeholders such as `[EMAIL_1]`, and the extension restores them in the AI's reply. Nothing leaves the device.
 
@@ -53,7 +53,7 @@ bench/                datasets (JSONL), generator, precision/recall runner
 - [x] **D0 Scaffold.** pnpm workspace, Biome, WXT React app, `pii-core` with email detector. `pnpm build` passes, first commit.
 - [x] **D1 Core.** `context.ts`, IP detector, overlap tests. 15+ unit tests including overlap and email-inside-URL.
 - [x] **D2 Validated detectors.** Luhn, mod-97, CNIC, card, IBAN, phone (PK default), passport (context-gated). Positive, hard-negative and context tests per type.
-- [ ] **D3 Secrets + bench v0.** AWS, GitHub, JWT (header decode check), private key, env assignments (value span only). ~150 labelled samples + 50 negatives; `pnpm bench` prints per-type P/R/F1.
+- [x] **D3 Secrets + bench v0.** AWS, GitHub, JWT (header decode check), private key, env assignments (value span only). ~150 labelled samples + 50 negatives; `pnpm bench` prints per-type P/R/F1.
 - [ ] **D4 ChatGPT adapter.** Adapter registry, `text-index.ts`. Correct offsets for multi-paragraph and code-block input.
 - [ ] **D5 Paste interception.** Redact mode turns pasted email + CNIC into `[EMAIL_1] â€¦ [CNIC_1]`; send works; Ctrl+Z works; no double insert.
 - [ ] **D6 Highlights + banner.** Live highlights in warn mode, Shadow DOM banner with finding chips and Redact buttons.
