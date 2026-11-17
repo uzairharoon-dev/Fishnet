@@ -1,4 +1,4 @@
-﻿# Fishnet plan
+# Fishnet plan
 
 Privacy-first Chrome extension (Manifest V3) that catches PII and secrets before they are sent to AI tools. It redacts them reversibly: real values become placeholders such as `[EMAIL_1]`, and the extension restores them in the AI's reply. Nothing leaves the device.
 
