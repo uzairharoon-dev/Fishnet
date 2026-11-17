@@ -9,6 +9,7 @@
     "build": "wxt build",
     "zip": "wxt zip",
     "typecheck": "tsc --noEmit",
+    "test": "vitest run",
     "postinstall": "wxt prepare"
   },
   "dependencies": {
@@ -20,7 +21,9 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@wxt-dev/module-react": "^1.1.5",
+    "jsdom": "^31.0.1",
     "typescript": "^5.9.3",
+    "vitest": "^3.2.7",
     "wxt": "^0.21.3"
   }
 }
