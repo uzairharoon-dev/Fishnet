@@ -55,7 +55,7 @@ bench/                datasets (JSONL), generator, precision/recall runner
 - [x] **D2 Validated detectors.** Luhn, mod-97, CNIC, card, IBAN, phone (PK default), passport (context-gated). Positive, hard-negative and context tests per type.
 - [x] **D3 Secrets + bench v0.** AWS, GitHub, JWT (header decode check), private key, env assignments (value span only). ~150 labelled samples + 50 negatives; `pnpm bench` prints per-type P/R/F1.
 - [x] **D4 ChatGPT adapter.** Adapter registry, `text-index.ts`. Correct offsets for multi-paragraph and code-block input.
-- [ ] **D5 Paste interception.** Redact mode turns pasted email + CNIC into `[EMAIL_1] Ã¢â‚¬Â¦ [CNIC_1]`; send works; Ctrl+Z works; no double insert.
+- [x] **D5 Paste interception.** Redact mode turns pasted email + CNIC into `[EMAIL_1] Ã¢â‚¬Â¦ [CNIC_1]`; send works; Ctrl+Z works; no double insert.
 - [ ] **D6 Highlights + banner.** Live highlights in warn mode, Shadow DOM banner with finding chips and Redact buttons.
 - [ ] **D7 Submit interception.** Three modes behave; Shift+Enter still newline; clean messages send instantly.
 - [ ] **D8 Settings + UI.** Options page (per-site mode, detector toggles), popup (site toggle, counts, adapter health), badge. Changes apply without reload.
