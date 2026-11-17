@@ -12,6 +12,16 @@ export { awsAccessKeyDetector, awsSecretKeyDetector } from './detectors/secrets/
 export { githubTokenDetector } from './detectors/secrets/github';
 export { hasJwtHeader, jwtDetector } from './detectors/secrets/jwt';
 export { privateKeyDetector } from './detectors/secrets/private-key';
+export {
+  normalizeValue,
+  type PlaceholderEntry,
+  PlaceholderMap,
+  type Replacement,
+  redact,
+  restore,
+  type SerializedMap,
+  TOKEN_RE,
+} from './placeholder';
 export { builtInDetectors, resolveOverlaps, type ScanOptions, scan, scanSync } from './scan';
 export type { AsyncDetector, DetectContext, Detector, EntityType, Finding } from './types';
 export { cardIssuer, isValidCard } from './validators/card';
