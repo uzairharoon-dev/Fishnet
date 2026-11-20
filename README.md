@@ -30,7 +30,7 @@ Current results (v0 datasets: 150 synthetic + 39 hand-labelled prompts, 50 negat
 
 These numbers are optimistic. The same person wrote the detectors and the test data, and both datasets are small. Treat them as a regression guard, not a claim of real-world accuracy. A larger hand-labelled set written by someone else is the next step.
 
-## Develop
+## Commands
 
 ```sh
 pnpm install
