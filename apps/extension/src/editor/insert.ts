@@ -9,8 +9,25 @@ export const syntheticPastes = new WeakSet<Event>();
 
 export type InsertMethod = 'paste-event' | 'exec-command' | 'set-range-text';
 
-export function insertText(editor: HTMLElement, text: string): InsertMethod | null {
-  editor.focus();
+export interface InsertOptions {
+  /**
+   * Try execCommand before the replayed paste. Use when replacing a selection
+   * set from script: the editor's paste handler may still hold the previous
+   * selection, while execCommand acts on the DOM selection directly.
+   * Only for single-line text.
+   */
+  preferExecCommand?: boolean;
+}
+
+export function insertText(
+  editor: HTMLElement,
+  text: string,
+  opts: InsertOptions = {},
+): InsertMethod | null {
+  // Focusing an unfocused editor moves the caret, which would lose a
+  // selection the caller just set.
+  const active = editor.ownerDocument.activeElement;
+  if (active !== editor && !editor.contains(active)) editor.focus();
 
   if (editor instanceof HTMLTextAreaElement || editor instanceof HTMLInputElement) {
     // insertText fires a real `input` event, which React-controlled fields need.
@@ -22,6 +39,10 @@ export function insertText(editor: HTMLElement, text: string): InsertMethod | nu
       new InputEvent('input', { bubbles: true, inputType: 'insertText', data: text }),
     );
     return 'set-range-text';
+  }
+
+  if (opts.preferExecCommand && document.execCommand?.('insertText', false, text)) {
+    return 'exec-command';
   }
 
   // Rich editors: replay a plain-text paste. The editor's own paste handler
