@@ -39,6 +39,13 @@ export function indexEditor(editor: HTMLElement): TextIndex {
 
 export function isPlainEnter(e: KeyboardEvent): boolean {
   return (
-    e.key === 'Enter' && !e.shiftKey && !e.altKey && !e.ctrlKey && !e.metaKey && !e.isComposing
+    e.key === 'Enter' &&
+    !e.shiftKey &&
+    !e.altKey &&
+    !e.ctrlKey &&
+    !e.metaKey &&
+    !e.isComposing &&
+    // Some browsers report the Enter that commits an IME composition as key code 229.
+    e.keyCode !== 229
   );
 }

@@ -55,6 +55,8 @@ describe('chatgpt adapter', () => {
     expect(key({ key: 'Enter' })).toBe(true);
     expect(key({ key: 'Enter', shiftKey: true })).toBe(false);
     expect(key({ key: 'Enter', isComposing: true })).toBe(false);
+    expect(key({ key: 'Enter', keyCode: 229 })).toBe(false);
+    expect(key({ key: 'Enter', ctrlKey: true })).toBe(false);
     expect(key({ key: 'a' })).toBe(false);
   });
 });
