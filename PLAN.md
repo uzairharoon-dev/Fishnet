@@ -56,7 +56,7 @@ bench/                datasets (JSONL), generator, precision/recall runner
 - [x] **D3 Secrets + bench v0.** AWS, GitHub, JWT (header decode check), private key, env assignments (value span only). ~150 labelled samples + 50 negatives; `pnpm bench` prints per-type P/R/F1.
 - [x] **D4 ChatGPT adapter.** Adapter registry, `text-index.ts`. Correct offsets for multi-paragraph and code-block input.
 - [x] **D5 Paste interception.** Redact mode turns pasted email + CNIC into `[EMAIL_1] Ã¢â‚¬Â¦ [CNIC_1]`; send works; Ctrl+Z works; no double insert.
-- [ ] **D6 Highlights + banner.** Live highlights in warn mode, Shadow DOM banner with finding chips and Redact buttons.
+- [x] **D6 Highlights + banner.** Live highlights in warn mode, Shadow DOM banner with finding chips and Redact buttons.
 - [ ] **D7 Submit interception.** Three modes behave; Shift+Enter still newline; clean messages send instantly.
 - [ ] **D8 Settings + UI.** Options page (per-site mode, detector toggles), popup (site toggle, counts, adapter health), badge. Changes apply without reload.
 - [ ] **D9 e2e + CI.** Playwright with `--load-extension`, local ProseMirror fixture served at chatgpt.com via `page.route`. CI runs lint, typecheck, unit, bench (fail on F1 drop >2 pts), e2e.
