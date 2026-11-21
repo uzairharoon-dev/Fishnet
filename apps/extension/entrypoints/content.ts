@@ -1,8 +1,12 @@
-import { scanSync } from '@fishnet/pii-core';
+import { type Finding, scanSync } from '@fishnet/pii-core';
 import { getAdapter } from '../src/adapters/registry';
 import { ConversationMaps } from '../src/conversation-maps';
+import { replaceFindings } from '../src/editor/replace';
 import { installPasteGuard } from '../src/intercept/paste';
 import { DEFAULT_MODE, isMode, type Mode } from '../src/settings/mode';
+import { Banner } from '../src/ui/banner';
+import { SEVERITY } from '../src/ui/describe';
+import { Highlighter } from '../src/ui/highlights';
 
 const RESCAN_DELAY_MS = 250;
 const EDITOR_TIMEOUT_MS = 10_000;
@@ -22,15 +26,20 @@ export default defineContentScript({
       mode = isMode(m) ? m : DEFAULT_MODE;
     };
     applyModes(await siteModes.getValue());
-    ctx.onInvalidated(siteModes.watch(applyModes));
+    ctx.onInvalidated(
+      siteModes.watch((modes) => {
+        applyModes(modes);
+        scheduleScan();
+      }),
+    );
 
     const maps = new ConversationMaps();
     const uninstallPasteGuard = installPasteGuard(window, {
       adapter,
       getMode: () => mode,
-      getMap: () => maps.get(adapter.conversationId(new URL(location.href))),
+      getMap: () => currentMap(),
       onResult: ({ action, findings, method }) => {
-        // Types only, never values. The banner (D6) replaces this.
+        // Types only, never values.
         const types = findings.map((f) => f.type).join(', ');
         if (action === 'failed') {
           console.warn(`[Fishnet] could not insert redacted paste (${types})`);
@@ -41,27 +50,48 @@ export default defineContentScript({
     });
     ctx.onInvalidated(uninstallPasteGuard);
 
-    // D4: scan the editor and log what was found. Highlighting (D6) and
-    // interception (D5, D7) build on this. Logs carry types and offsets only,
-    // never the matched values.
+    const currentMap = () => maps.get(adapter.conversationId(new URL(location.href)));
+    const highlighter = new Highlighter();
+    ctx.onInvalidated(() => highlighter.destroy());
+
+    // Highlights and banner show what is in the editor now. Typed text is
+    // never changed without a click; pastes are handled by the guard above.
     const scanEditor = () => {
       const editor = adapter.findEditor();
-      if (!editor) return;
+      if (!editor || mode === 'off') {
+        highlighter.clear();
+        banner.update([]);
+        return;
+      }
       const index = adapter.getText(editor);
       const findings = scanSync(index.text);
-      if (findings.length === 0) return;
-      console.debug(
-        '[Fishnet] findings',
-        findings.map((f) => ({
-          type: f.type,
-          start: f.start,
-          end: f.end,
-          confidence: f.confidence,
-          // Textareas have no DOM ranges, so null there is expected.
-          rangeMatches: index.offsetToRange(f.start, f.end)?.toString() === f.value || null,
-        })),
+      highlighter.show(
+        findings.flatMap((f) => {
+          const range = index.offsetToRange(f.start, f.end);
+          return range ? [{ range, severity: SEVERITY[f.type] }] : [];
+        }),
       );
+      banner.update(findings);
     };
+
+    const redactInEditor = (findings: Finding[]) => {
+      const editor = adapter.findEditor();
+      if (editor) replaceFindings(adapter, editor, findings, currentMap());
+      scanEditor();
+    };
+
+    const banner = new Banner({
+      onRedactAll: redactInEditor,
+      onRedact: (f) => redactInEditor([f]),
+      onLocate: (f) => {
+        const editor = adapter.findEditor();
+        const range = editor && adapter.getText(editor).offsetToRange(f.start, f.end);
+        if (!range) return;
+        range.startContainer.parentElement?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        highlighter.flash(range);
+      },
+    });
+    ctx.onInvalidated(() => banner.destroy());
 
     let timer: number | undefined;
     const scheduleScan = () => {
@@ -91,6 +121,10 @@ export default defineContentScript({
       }, EDITOR_TIMEOUT_MS);
     };
     checkEditor();
-    ctx.addEventListener(window, 'wxt:locationchange', checkEditor);
+    scheduleScan();
+    ctx.addEventListener(window, 'wxt:locationchange', () => {
+      checkEditor();
+      scheduleScan();
+    });
   },
 });
