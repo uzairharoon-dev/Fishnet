@@ -3,10 +3,12 @@ import { getAdapter } from '../src/adapters/registry';
 import { ConversationMaps } from '../src/conversation-maps';
 import { replaceFindings } from '../src/editor/replace';
 import { installPasteGuard } from '../src/intercept/paste';
+import { installSubmitGuard } from '../src/intercept/submit';
 import { DEFAULT_MODE, isMode, type Mode } from '../src/settings/mode';
 import { Banner } from '../src/ui/banner';
 import { SEVERITY } from '../src/ui/describe';
 import { Highlighter } from '../src/ui/highlights';
+import { ReviewDialog } from '../src/ui/review';
 
 const RESCAN_DELAY_MS = 250;
 const EDITOR_TIMEOUT_MS = 10_000;
@@ -50,12 +52,32 @@ export default defineContentScript({
     });
     ctx.onInvalidated(uninstallPasteGuard);
 
+    const review = new ReviewDialog();
+    ctx.onInvalidated(() => review.close());
+    const uninstallSubmitGuard = installSubmitGuard(window, {
+      adapter,
+      getMode: () => mode,
+      getMap: () => currentMap(),
+      review: (findings) => review.open(findings),
+      onResult: ({ action, findings }) => {
+        // Types only, never values.
+        const types = findings.map((f) => f.type).join(', ');
+        if (action === 'failed') {
+          console.warn(`[Fishnet] held back a message that could not be redacted (${types})`);
+        } else {
+          console.info(`[Fishnet] submit ${action}: ${types}`);
+        }
+        scheduleScan();
+      },
+    });
+    ctx.onInvalidated(uninstallSubmitGuard);
+
     const currentMap = () => maps.get(adapter.conversationId(new URL(location.href)));
     const highlighter = new Highlighter();
     ctx.onInvalidated(() => highlighter.destroy());
 
     // Highlights and banner show what is in the editor now. Typed text is
-    // never changed without a click; pastes are handled by the guard above.
+    // only changed on a click or on send; pastes are handled by the guard above.
     const scanEditor = () => {
       const editor = adapter.findEditor();
       if (!editor || mode === 'off') {
