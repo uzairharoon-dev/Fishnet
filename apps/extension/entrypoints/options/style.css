@@ -1,0 +1,63 @@
+.options {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 32px 16px;
+  display: grid;
+  gap: 28px;
+}
+h1 {
+  font-size: 20px;
+  margin-bottom: 4px;
+}
+h2 {
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+h3 {
+  font-size: 14px;
+}
+.sites {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.sites li {
+  display: grid;
+  grid-template-columns: 1fr minmax(0, 300px);
+  gap: 16px;
+  align-items: start;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+}
+@media (max-width: 480px) {
+  .sites li {
+    grid-template-columns: 1fr;
+  }
+}
+.groups {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+.groups fieldset {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 8px 12px 10px;
+  margin: 0;
+  display: grid;
+  gap: 4px;
+}
+.groups legend {
+  font-weight: 600;
+  padding: 0 4px;
+}
+.groups label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
