@@ -1,23 +1,55 @@
-:root {
-  font-family: system-ui, sans-serif;
-  color-scheme: light dark;
-}
-
 body {
-  margin: 0;
-  min-width: 280px;
+  width: 320px;
 }
-
-main {
-  padding: 16px;
+.popup {
+  display: grid;
+  gap: 14px;
+  padding: 14px;
 }
-
 h1 {
-  margin: 0 0 8px;
-  font-size: 18px;
+  font-size: 16px;
 }
-
-p {
+h2 {
+  font-size: 14px;
+}
+h3 {
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.health {
+  margin-top: 2px;
+}
+.health::before {
+  content: "●  ";
+}
+.health.ok::before {
+  color: var(--ok);
+}
+.health.warn {
+  color: var(--warn);
+}
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
   margin: 0;
-  font-size: 13px;
+}
+.stats div {
+  background: var(--surface);
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+.stats dt {
+  color: var(--muted);
+  font-size: 12px;
+}
+.stats dd {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+footer {
+  display: flex;
+  justify-content: flex-end;
 }
