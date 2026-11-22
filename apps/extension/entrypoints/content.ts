@@ -4,7 +4,10 @@ import { ConversationMaps } from '../src/conversation-maps';
 import { replaceFindings } from '../src/editor/replace';
 import { installPasteGuard } from '../src/intercept/paste';
 import { installSubmitGuard } from '../src/intercept/submit';
-import { DEFAULT_MODE, isMode, type Mode } from '../src/settings/mode';
+import { isFishnetMessage, type TabStatus } from '../src/messages';
+import type { Mode } from '../src/settings/mode';
+import { enabledTypes, modeFor, type Settings } from '../src/settings/schema';
+import { loadSettings, watchSettings } from '../src/settings/store';
 import { Banner } from '../src/ui/banner';
 import { SEVERITY } from '../src/ui/describe';
 import { Highlighter } from '../src/ui/highlights';
@@ -13,34 +16,40 @@ import { ReviewDialog } from '../src/ui/review';
 const RESCAN_DELAY_MS = 250;
 const EDITOR_TIMEOUT_MS = 10_000;
 
-/** Mode per site id. Temporary until the full settings schema (D8). */
-const siteModes = storage.defineItem<Record<string, Mode>>('local:siteModes', { fallback: {} });
-
 export default defineContentScript({
   matches: ['https://chatgpt.com/*'],
   async main(ctx) {
     const adapter = getAdapter(new URL(location.href));
     if (!adapter) return;
 
-    let mode: Mode = DEFAULT_MODE;
-    const applyModes = (modes: Record<string, Mode> | null) => {
-      const m = modes?.[adapter.id];
-      mode = isMode(m) ? m : DEFAULT_MODE;
+    // Settings changes from the popup or options page apply without a reload.
+    let mode: Mode;
+    let scan: (text: string) => Finding[];
+    const applySettings = (settings: Settings) => {
+      mode = modeFor(settings, adapter.id);
+      const types = enabledTypes(settings);
+      scan = (text) => scanSync(text, { enabledTypes: types });
     };
-    applyModes(await siteModes.getValue());
+    applySettings(await loadSettings());
     ctx.onInvalidated(
-      siteModes.watch((modes) => {
-        applyModes(modes);
+      watchSettings((settings) => {
+        applySettings(settings);
         scheduleScan();
       }),
     );
+
+    // Counts for the popup and badge. Never values.
+    let redacted = 0;
+    let current: Finding[] = [];
 
     const maps = new ConversationMaps();
     const uninstallPasteGuard = installPasteGuard(window, {
       adapter,
       getMode: () => mode,
       getMap: () => currentMap(),
+      scan: (text) => scan(text),
       onResult: ({ action, findings, method }) => {
+        if (action === 'redacted') redacted += findings.length;
         // Types only, never values.
         const types = findings.map((f) => f.type).join(', ');
         if (action === 'failed') {
@@ -59,7 +68,9 @@ export default defineContentScript({
       getMode: () => mode,
       getMap: () => currentMap(),
       review: (findings) => review.open(findings),
+      scan: (text) => scan(text),
       onResult: ({ action, findings }) => {
+        if (action === 'redacted') redacted += findings.length;
         // Types only, never values.
         const types = findings.map((f) => f.type).join(', ');
         if (action === 'failed') {
@@ -83,10 +94,11 @@ export default defineContentScript({
       if (!editor || mode === 'off') {
         highlighter.clear();
         banner.update([]);
+        report([]);
         return;
       }
       const index = adapter.getText(editor);
-      const findings = scanSync(index.text);
+      const findings = scan(index.text);
       highlighter.show(
         findings.flatMap((f) => {
           const range = index.offsetToRange(f.start, f.end);
@@ -94,11 +106,39 @@ export default defineContentScript({
         }),
       );
       banner.update(findings);
+      report(findings);
     };
+
+    // Tell the background (for the badge) only when the findings change.
+    let reportedKey = '';
+    const report = (findings: Finding[]) => {
+      current = findings;
+      const high = findings.some((f) => SEVERITY[f.type] === 'high');
+      const key = `${findings.length}:${high}`;
+      if (key === reportedKey) return;
+      reportedKey = key;
+      browser.runtime
+        .sendMessage({ type: 'fishnet:findings', count: findings.length, high })
+        .catch(() => {}); // Extension reloaded; this script is about to be invalidated.
+    };
+
+    // The popup asks for this tab's status.
+    const onMessage = (message: unknown, _sender: unknown, respond: (s: TabStatus) => void) => {
+      if (!isFishnetMessage(message) || message.type !== 'fishnet:status') return;
+      respond({
+        site: adapter.id,
+        mode,
+        editorFound: !!adapter.findEditor(),
+        findings: current.length,
+        redacted,
+      });
+    };
+    browser.runtime.onMessage.addListener(onMessage);
+    ctx.onInvalidated(() => browser.runtime.onMessage.removeListener(onMessage));
 
     const redactInEditor = (findings: Finding[]) => {
       const editor = adapter.findEditor();
-      if (editor) replaceFindings(adapter, editor, findings, currentMap());
+      if (editor) redacted += replaceFindings(adapter, editor, findings, currentMap());
       scanEditor();
     };
 
