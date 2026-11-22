@@ -1,0 +1,99 @@
+/* Shared by the popup and options page. */
+:root {
+  --bg: #ffffff;
+  --fg: #1f2328;
+  --muted: #59636e;
+  --border: #d1d9e0;
+  --surface: #f6f8fa;
+  --accent: #0969da;
+  --accent-fg: #ffffff;
+  --ok: #1a7f37;
+  --warn: #9a6700;
+  --high: #cf222e;
+  color-scheme: light dark;
+  font:
+    13px / 1.45 system-ui,
+    -apple-system,
+    "Segoe UI",
+    sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1f2328;
+    --fg: #e6edf3;
+    --muted: #9198a1;
+    --border: #3d444d;
+    --surface: #262c36;
+    --accent: #4493f8;
+    --accent-fg: #0d1117;
+    --ok: #3fb950;
+    --warn: #d29922;
+    --high: #ff7b72;
+  }
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+}
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 5px 10px;
+}
+button:hover {
+  background: var(--surface);
+}
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.muted,
+.hint {
+  color: var(--muted);
+}
+.hint {
+  margin-top: 6px;
+  font-size: 12px;
+}
+
+.mode-picker fieldset {
+  display: flex;
+  margin: 0;
+  padding: 2px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+}
+.mode-picker label {
+  flex: 1;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+  cursor: pointer;
+  user-select: none;
+}
+.mode-picker label.selected {
+  background: var(--accent);
+  color: var(--accent-fg);
+  font-weight: 600;
+}
+.mode-picker label:has(input:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+.mode-picker input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
