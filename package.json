@@ -6,6 +6,7 @@
     "dev": "pnpm --filter @fishnet/extension dev",
     "build": "pnpm -r build",
     "test": "pnpm -r test",
+    "e2e": "pnpm --filter @fishnet/extension e2e",
     "typecheck": "pnpm -r typecheck && tsc -p bench",
     "bench": "tsx bench/run.ts",
     "bench:gen": "tsx bench/generate.ts",
