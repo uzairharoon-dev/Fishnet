@@ -59,7 +59,7 @@ bench/                datasets (JSONL), generator, precision/recall runner
 - [x] **D6 Highlights + banner.** Live highlights in warn mode, Shadow DOM banner with finding chips and Redact buttons.
 - [x] **D7 Submit interception.** Three modes behave; Shift+Enter still newline; clean messages send instantly.
 - [x] **D8 Settings + UI.** Options page (per-site mode, detector toggles), popup (site toggle, counts, adapter health), badge. Changes apply without reload.
-- [ ] **D9 e2e + CI.** Playwright with `--load-extension`, local ProseMirror fixture served at chatgpt.com via `page.route`. CI runs lint, typecheck, unit, bench (fail on F1 drop >2 pts), e2e.
+- [x] **D9 e2e + CI.** Playwright with `--load-extension`, local ProseMirror fixture served at chatgpt.com via `page.route`. CI runs lint, typecheck, unit, bench (fail on F1 drop >2 pts), e2e.
 - [ ] **D10 Ship v0.1.0.** README (GIF, diagram, benchmark table, honest limits), PRIVACY.md, minimal permissions, tag.
 
 ## Benchmark
