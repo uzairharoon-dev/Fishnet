@@ -10,7 +10,8 @@
     "zip": "wxt zip",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "postinstall": "wxt prepare"
+    "postinstall": "wxt prepare",
+    "e2e": "wxt build && playwright test"
   },
   "dependencies": {
     "@fishnet/pii-core": "workspace:*",
