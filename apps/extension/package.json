@@ -11,7 +11,8 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "postinstall": "wxt prepare",
-    "e2e": "wxt build && playwright test"
+    "e2e": "wxt build && playwright test",
+    "screenshots": "wxt build && playwright test --config playwright.docs.config.ts"
   },
   "dependencies": {
     "@fishnet/pii-core": "workspace:*",
