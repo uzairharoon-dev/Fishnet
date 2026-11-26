@@ -30,13 +30,17 @@ export default defineContentScript({
       const types = enabledTypes(settings);
       scan = (text) => scanSync(text, { enabledTypes: types });
     };
-    applySettings(await loadSettings());
+    // Watch before the first read, so a change made while it loads is not missed.
+    let changed = false;
     ctx.onInvalidated(
       watchSettings((settings) => {
+        changed = true;
         applySettings(settings);
         scheduleScan();
       }),
     );
+    const initial = await loadSettings();
+    if (!changed) applySettings(initial);
 
     // Counts for the popup and badge. Never values.
     let redacted = 0;
