@@ -49,6 +49,7 @@ h3 {
   padding: 8px 12px 10px;
   margin: 0;
   display: grid;
+  align-content: start;
   gap: 4px;
 }
 .groups legend {
