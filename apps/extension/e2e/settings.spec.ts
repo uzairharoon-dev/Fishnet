@@ -18,7 +18,13 @@ test('turning a mode off applies without a reload', async ({ chat, worker }) => 
 });
 
 test('a disabled detector is skipped', async ({ chat, worker }) => {
+  await chat.keyboard.type('mail ahmed@acme.pk ');
+  await expect.poll(() => badgeText(worker)).toBe('1');
   await setSettings(worker, { siteModes: {}, disabledTypes: ['EMAIL'] });
+  // The mode did not change, so wait for the rescan that drops the email.
+  await expect.poll(() => badgeText(worker)).toBe('');
+  await chat.keyboard.press('Control+a');
+  await chat.keyboard.press('Delete');
   await paste(chat, 'mail ahmed@acme.pk, CNIC 35202-1234567-1');
   await expect(chat.locator('#prompt-textarea')).toHaveText('mail ahmed@acme.pk, CNIC [CNIC_1]');
 });

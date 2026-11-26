@@ -13,7 +13,10 @@ import { buildSync } from 'esbuild';
 /** The parts of the chrome API that the helpers below call inside the service worker. */
 declare const chrome: {
   storage: { local: { set(items: Record<string, unknown>): Promise<void> } };
-  tabs: { query(query: object): Promise<{ id?: number }[]> };
+  tabs: {
+    query(query: object): Promise<{ id?: number }[]>;
+    sendMessage(tabId: number, message: object): Promise<{ mode?: string } | undefined>;
+  };
   action: { getBadgeText(details: { tabId: number }): Promise<string> };
 };
 
@@ -63,10 +66,12 @@ export const test = base.extend<Fixtures>({
     await use(worker);
   },
 
-  chat: async ({ context, worker: _worker }, use) => {
+  chat: async ({ context, worker }, use) => {
     const page = await context.newPage();
     await page.goto('https://chatgpt.com/');
     await page.locator('#prompt-textarea').waitFor();
+    // The content script starts after the page loads; wait until it answers.
+    await expect.poll(() => contentMode(worker)).not.toBeNull();
     await use(page);
   },
 });
@@ -88,9 +93,34 @@ export async function paste(page: Page, text: string) {
   }, text);
 }
 
-/** Writes Fishnet settings the way the popup and options page do. */
-export async function setSettings(worker: Worker, settings: unknown) {
+interface TestSettings {
+  siteModes: { chatgpt?: string };
+  disabledTypes: string[];
+}
+
+/**
+ * Writes Fishnet settings the way the popup and options page do, then waits
+ * until the content script reports the new mode (settings apply asynchronously).
+ */
+export async function setSettings(worker: Worker, settings: TestSettings) {
   await worker.evaluate((value) => chrome.storage.local.set({ settings: value }), settings);
+  await expect.poll(() => contentMode(worker)).toBe(settings.siteModes.chatgpt ?? 'redact');
+}
+
+/** Mode the content script on the chatgpt.com tab is using, from the popup's status message. */
+function contentMode(worker: Worker) {
+  return worker.evaluate(async () => {
+    for (const tab of await chrome.tabs.query({})) {
+      if (tab.id === undefined) continue;
+      try {
+        const status = await chrome.tabs.sendMessage(tab.id, { type: 'fishnet:status' });
+        if (status?.mode) return status.mode;
+      } catch {
+        // No content script in this tab.
+      }
+    }
+    return null;
+  });
 }
 
 /** Badge text on the tab showing chatgpt.com. */
